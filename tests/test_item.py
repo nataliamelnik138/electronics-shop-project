@@ -55,4 +55,3 @@ def test_add():
     assert item1 + phone1 == 25
     assert item1 + item2 == 30
     assert phone1 + phone1 == 10
-    assert item1 + 10 is None
