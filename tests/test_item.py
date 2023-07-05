@@ -55,3 +55,5 @@ def test_add():
     assert item1 + phone1 == 25
     assert item1 + item2 == 30
     assert phone1 + phone1 == 10
+    with pytest.raises(TypeError, match='Складывать можно только экземпляры классов Phone или Item'):
+        phone1 + 10
