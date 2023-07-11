@@ -1,4 +1,13 @@
 import csv
+import os
+
+
+class InstantiateCSVError(Exception):
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл поврежден'
+
+    def __str__(self):
+        return self.message
 
 
 class Item:
@@ -58,8 +67,13 @@ class Item:
     def instantiate_from_csv(cls):
         """Класс-метод, инициализирующий экземпляры класса Item данными из файла src/items.csv"""
         cls.all = []
+        if not os.path.exists('../src/items.csv'):
+            raise FileNotFoundError("Отсутствует файл item.csv")
         with open('../src/items.csv', 'rt', encoding='utf-8') as csvfile:
             data = csv.DictReader(csvfile, delimiter=',')
+            key_data = data.fieldnames
+            if key_data != ['name', "price", "quantity"]:
+                raise InstantiateCSVError("Файл item.csv поврежден")
             for line in data:
                 cls(line['name'], float(line["price"]), cls.string_to_number(line["quantity"]))
 
