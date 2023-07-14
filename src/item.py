@@ -64,12 +64,12 @@ class Item:
         self.price *= self.pay_rate
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, filename='../src/items.csv'):
         """Класс-метод, инициализирующий экземпляры класса Item данными из файла src/items.csv"""
         cls.all = []
-        if not os.path.exists('../src/items.csv'):
+        if not os.path.exists(filename):
             raise FileNotFoundError("Отсутствует файл item.csv")
-        with open('../src/items.csv', 'rt', encoding='utf-8') as csvfile:
+        with open(filename, 'rt', encoding='utf-8') as csvfile:
             data = csv.DictReader(csvfile, delimiter=',')
             key_data = data.fieldnames
             if key_data != ['name', "price", "quantity"]:

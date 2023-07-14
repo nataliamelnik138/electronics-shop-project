@@ -29,19 +29,19 @@ def test_name():
 
 
 def test_instantiate_from_csv():
-    Item.instantiate_from_csv()  # создание объектов из данных файла
+    Item.instantiate_from_csv('../src/items.csv')  # создание объектов из данных файла
     assert len(Item.all) == 5  # в файле 5 записей с данными по товарам
 
     item1 = Item.all[0]
     assert item1.name == 'Смартфон'
 
     # Если файл поврежден
-    # with pytest.raises(InstantiateCSVError, match='Файл item.csv поврежден'):
-    #     Item.instantiate_from_csv()
+    with pytest.raises(InstantiateCSVError, match='Файл item.csv поврежден'):
+        Item.instantiate_from_csv('../src/item.py')
 
     # Если файл отсутствует
-    # with pytest.raises(FileNotFoundError, match='Файл item.csv поврежден'):
-#     Item.instantiate_from_csv()
+    with pytest.raises(FileNotFoundError, match='Отсутствует файл item.csv'):
+        Item.instantiate_from_csv('tems.csv')
 
 
 def test_string_to_number():
